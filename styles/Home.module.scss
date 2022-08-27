@@ -1,0 +1,13 @@
+@use 'mixins' as *;
+
+.container {
+    @include flexbox(row, center, flex-end);
+    height: 100%;
+    font-size: 2rem;
+}
+// .main {
+//     @include flexbox(row, center, center);
+//     height: 50%;
+//     width: 50%;
+//     background-color: aquamarine;
+// }

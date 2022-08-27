@@ -1,0 +1,22 @@
+@use 'mixins' as *;
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+div[id*="next"] {
+    width: 100vw;
+    height: 100vh;
+}
+
+.inputs {
+    @include flexbox(column, flex-end, center)
+}
+
+.results {
+    background-color: hsl(60 67% 90%);
+    @include flexbox(column, center, center)
+}
