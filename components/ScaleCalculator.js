@@ -23,6 +23,7 @@ export default function ScaleCalculator(props) {
   const [numerator, setNumerator] = useState(3)
   const [denominator, setDenominator] = useState(12)
   const [scaleResult, setScaleResult] = useState(0)
+  const [simplifiedRatio, setSimplifiedRatio] = useState({n:0, d:0})
 
 
   let ratio = numerator / denominator
@@ -50,19 +51,16 @@ export default function ScaleCalculator(props) {
     n = parseInt(n)
     d = parseInt(d)
     let result = {};
-    // console.log(Number(n * (1 / n).toFixed(2)))
-    // if (n < d) result = Number(n * (1 / n).toFixed(2)) + ":" + Number(d * (1 / n).toFixed(2))
+    // if (n < d)
     // if (n < d) {
       result = {
         "n":(n * 1) / n,
         "d": (d * 1) / n
       }
-    
+      setSimplifiedRatio(result)
       console.log(result)
-    // if (n < d) result = n * (1 / n) + ":" + d * (1 / n)
-    // if (n > d) result = (n * (1 / d) + ":" + d * (1 / d))
-    // return Number(result.toFixed(2))
-    // return result
+      return result
+  
   }
 
 
@@ -79,18 +77,18 @@ export default function ScaleCalculator(props) {
 
   // let proof = scaleNumb(userValue, numerator, denominator)
 
-  const simplifiedScale = (val, numer, denom) => {
-    let result;
-    if (numer > denom) {
-      let n = 1 / numer
-      result = (numer * n) + ":" + (denom * n);
-      return result
-    }
-    else if (denom > numer && numer / denom !== 1) {
-      result = (numer * (1 / val)) / (denom * (1 / val))
-    }
-    return result
-  }
+  // const simplifiedScale = (val, numer, denom) => {
+  //   let result;
+  //   if (numer > denom) {
+  //     let n = 1 / numer
+  //     result = (numer * n) + ":" + (denom * n);
+  //     return result
+  //   }
+  //   else if (denom > numer && numer / denom !== 1) {
+  //     result = (numer * (1 / val)) / (denom * (1 / val))
+  //   }
+  //   return result
+  // }
 
 
 
@@ -108,7 +106,7 @@ export default function ScaleCalculator(props) {
         <option value="km">kilometers</option>
       </select>
       <br></br>
-      <div className={styles.inputs__scales}>
+      <div className={styles.inputs__scales} onChange={() => ratioTo1(numerator, denominator)}>
 
         <input type="number" id="real-length" placeholder="real length" value={numerator} onChange={(e) => setNumerator(e.target.value)} />
         <h4>:</h4>
@@ -129,7 +127,7 @@ export default function ScaleCalculator(props) {
  */}
 
 
-        <h4>scale {numerator}:{denominator} ({ratioTo1(numerator, denominator)})</h4>
+        <h4>scale {numerator}:{denominator} ( {simplifiedRatio.n.toFixed(2)} : {simplifiedRatio.d.toFixed(2)})</h4>
 
       </div>
       <h6>{scaleResult}</h6>
