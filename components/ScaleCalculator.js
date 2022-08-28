@@ -18,6 +18,8 @@ export default function ScaleCalculator(props) {
   const [denominator, setDenominator] = useState(125)
   const [simplifiedRatio, setSimplifiedRatio] = useState({ n: 0, d: 0 })
 
+  let ratio = +numerator / +denominator
+  let sameUnitsResult = userValue * ratio
 
   useEffect(() => {
 
@@ -76,38 +78,62 @@ export default function ScaleCalculator(props) {
   return (
 
     <div className={styles.container}>
-      <h1>SCALE CALC</h1>
-      <label htmlFor="user">Distance</label>
-      <input type="number" id="user" placeholder="user input" value={userValue} onChange={(e) => setUserValue(Number(e.target.value))} />
+      <div className={styles.header}>
+        <h3><span>Scale</span> Converter</h3>
+        <h4>Instant, minimal, efficient scale conversions.</h4>
+        <hr></hr>
+      </div>
+      <div className={styles.body}>
+        <h5 className={styles.instruction}>Specify distance to be converted</h5>
+      <label htmlFor="real-length">Distance</label>
+      <input type="number" id="real-length" placeholder="user input" value={userValue} onChange={(e) => setUserValue(Number(e.target.value))} />
 
-      <select id="units" ref={userRef} onChange={() => setUserUnits(userRef.current.value)}>
-        <option value="mm">milimeters</option>
-        <option value="cm">centimeters</option>
-        <option value="m" selected>meters</option>
-        <option value="km">kilometers</option>
+      <label htmlFor="initial-units">Units</label>
+      <select id="initial-units" ref={userRef} onChange={() => setUserUnits(userRef.current.value)}>
+        <optgroup label="International">
+          <option value="mm">milimeters</option>
+          <option value="cm">centimeters</option>
+          <option value="m" selected>meters</option>
+          <option value="km">kilometers</option>
+        </optgroup>
+        <optgroup label="Imperial">
+          <option value="in">inches</option>
+          <option value="ft">feet</option>
+          <option value="yd">yards</option>
+          <option value="mi">miles</option>
+        </optgroup>
       </select>
       <br></br>
+        <h5 className={styles.instruction}>Pick your desired scale</h5>
       <div className={styles.inputs__scales} onChange={() => ratioTo1(numerator, denominator)}>
-
         <input type="number" id="real-length" placeholder="real length" value={numerator} onChange={(e) => setNumerator(Number(e.target.value))} />
         <h4>:</h4>
         <input type="number" id="scale-length" placeholder="scale length" value={denominator} onChange={(e) => setDenominator(Number(e.target.value))} />
         <label htmlFor="desiredUnits">Units</label>
         <select id="desiredUnits" ref={scaledRef} onChange={() => setScaledUnits(scaledRef.current.value)}>
-          <option value="mm">milimeters</option>
-          <option value="cm">centimeters</option>
-          <option value="m" selected>meters</option>
-          <option value="km">kilometers</option>
+          <optgroup label="International">
+            <option value="mm">milimeters</option>
+            <option value="cm">centimeters</option>
+            <option value="m" selected>meters</option>
+            <option value="km">kilometers</option>
+          </optgroup>
+          <optgroup label="Imperial">
+            <option value="in">inches</option>
+            <option value="ft">feet</option>
+            <option value="yd">yards</option>
+            <option value="mi">miles</option>
+          </optgroup>
         </select>
       </div>
-      <div className="results">
-
-        <h3>{`${userValue} * ${numerator} / ${denominator} =` + scaleResult.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " " + scaledUnits}</h3>
+      </div>
+      <div className={styles.results}>
+  
+        <h3>{`${userValue + " " + userUnits}* ${numerator} / ${denominator} =` + sameUnitsResult + " " + userUnits}</h3>
 
         <h4>scale {numerator}:{denominator}</h4>
-
       </div>
-      <h6>{scaleResult}</h6>
+      <h1>
+        {scaleResult.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + scaledUnits}</h1>
     </div>
   )
 }
