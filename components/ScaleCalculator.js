@@ -55,7 +55,7 @@ export default function ScaleCalculator(props) {
       return
     }
     
-  }, [simplifiedRatio])
+  }, [simplifiedRatio, suggScales])
 
   const changeUnits = (value, initial_unit, desired_unit) => {
     value = Number(value)

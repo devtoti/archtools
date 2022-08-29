@@ -27,7 +27,7 @@ export default function Home() {
         <meta name="description" content="Architecture Widgets" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin></link>
           <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz@8..144&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet"></link>
           </Head>
 
