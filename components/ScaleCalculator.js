@@ -1,6 +1,5 @@
 import styles from '../styles/scales.module.scss'
 import { useEffect, useState, useRef, useContext } from 'react'
-import ScaleFactor from './scaleFactor'
 import { ChartBarIcon, ArrowDownIcon } from '@heroicons/react/24/solid'
 export default function ScaleCalculator(props) {
 
