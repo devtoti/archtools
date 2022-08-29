@@ -1,33 +1,149 @@
-@use 'mixins' as *;
+@use 'mixins'as *;
 
 
 .container {
-background-color: rgb(0 0 0 / 0.1);
-height: 60vh;
-border-radius: 16px;
-padding: 2rem;
-box-sizing: border-box;
-
+    background-color: rgb(0 0 0 / 0.1);
+    height: 100vh;
+    border-radius: 16px;
+    padding: 3rem 2rem 4rem;
+    box-sizing: border-box;
+    position: relative;
+    counter-reset: step;
+    // outline: 1px solid green
+    label {
+        display: block;
+        width: 100%;
+    }
 }
 
-.inputs__scales {
-    @include flexbox(row, center, center);
-    background-color: bisque;
-    font-size: 1.5rem;
+// .inputs__scales {
+//     @include flexbox(row, center, center);
+//     background-color: bisque;
+//     font-size: 1.5rem;
 
-    input {
-        padding: 0.5rem;
-        font-size: 2rem;
-        width: 100px;
-        border-radius: 8px;
+//     input {
+//         padding: 0.5rem;
+//         font-size: 2rem;
+//         width: 100px;
+//         border-radius: 8px;
+//     }
+
+// }
+
+.instruction {
+    color: blue;
+    padding-bottom: 1rem;
+    line-height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    counter-increment: step;
+   
+    &::before {
+        content: counter(step);
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background-color: blue;
+        color: white;
+        text-align: center;
+        margin-right: 0.5rem;
     }
-
 }
 
 .header {
     background-color: hsl(0 50% 80%);
+    @include flexbox(column, center, center);
 }
 
 .body {
     background-color: hsl(60, 50%, 80%);
+
+    section {
+        height: 4rem;
+        position: relative;
+        @include flexbox(row, center, center);
+        width: 100%;
+
+        input,
+        select {
+            box-sizing: border-box;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 2rem;
+            width: 100%;
+
+        }
+
+        input {
+            border-radius: 12px 0 0 12px;
+        }
+
+        select {
+            border-radius: 0 12px 12px 0;
+
+        }
+
+        label {
+            position: absolute;
+            top: -1rem;
+            font-size: clamp(12px, 12px + 1vw, 16px);
+        }
+
+    }
+
+}
+
+.suggScales {
+    color: red;
+    min-width: 100%;
+    @include flexbox(row, center, center);
+    justify-content: space-around;
+
+    & * {}
+}
+
+// .grid {
+//     background-color: hotpink;
+//     display: grid !important;
+//     grid-template-rows: repeat(2 1fr) ;
+// }
+
+.results {
+    @include flexbox(column, center, center);
+    background-color: hsl(180, 50%, 80%);
+    text-align: center;
+    min-height: 50%;
+    position: relative;
+
+    h5 {
+        width: 100%;
+        text-align: start;
+        position: absolute;
+        top: 0;
+        // justify-self: start;
+    }
+
+    canvas {
+        background-color: aqua;
+        width: 100%;
+        aspect-ratio: 4/1;
+    }
+    article {
+        width: 100%;
+        // text-align: start;
+        position: absolute;
+        bottom: 2rem;
+    }
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    height: 64px;
+    text-align: center;
+    left: 0;
+    bottom: 0;
+    background-color: hsl(120, 50%, 80%);
 }
