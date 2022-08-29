@@ -7,16 +7,17 @@ export default function ScaleCalculator(props) {
 
   const userRef = useRef()
   const scaledRef = useRef()
+  const canvasRef = useRef()
 
 
 
-  const [scaledUnits, setScaledUnits] = useState('m')
-  const [userUnits, setUserUnits] = useState('km')
-  const [userValue, setUserValue] = useState(37)
+  const [scaledUnits, setScaledUnits] = useState('ft')
+  const [userUnits, setUserUnits] = useState('m')
+  const [userValue, setUserValue] = useState(3)
 
   const [scaleResult, setScaleResult] = useState(0)
-  const [numerator, setNumerator] = useState(1)
-  const [denominator, setDenominator] = useState(125)
+  const [numerator, setNumerator] = useState(3)
+  const [denominator, setDenominator] = useState(10)
   const [simplifiedRatio, setSimplifiedRatio] = useState({ n: 0, d: 0 })
 
   let ratio = +numerator / +denominator
@@ -25,8 +26,14 @@ export default function ScaleCalculator(props) {
     "1/10", "1/20", "1/50", "1/100", "1/200", "1/500"
   ]
   useEffect(() => {
-
-  }, [])
+    let canvas = canvasRef.current
+    console.log(canvas.width)
+    let context = canvas.getContext('2d')
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = 'rgb(0 0 0 / 0.3';
+    context.fillRect(0, 50, canvas.width-16, 25)
+    context.fillRect(0, 100, canvas.width * 1/denominator -16, 25)
+  }, [userValue, numerator, denominator, userUnits, scaledUnits])
 
   useEffect(() => {
     let ratio = +numerator / +denominator
@@ -46,6 +53,10 @@ export default function ScaleCalculator(props) {
       "cm": 1e1,
       "m": 1e3,
       "km": 1e6,
+      "in": 254e-1,
+      "ft": 3048e-1,
+      "yd": 9144e-1,
+      "mi": 1.609e6,
     }
 
     let RATIO_IN_MM = Number(conversions[initial_unit]) / Number(conversions[desired_unit])
@@ -60,13 +71,16 @@ export default function ScaleCalculator(props) {
   const ratioTo1 = (n, d) => {
     n = parseInt(n)
     d = parseInt(d)
-    let result = {};
-    result = {
-      "n": (n * 1) / n,
-      "d": (d * 1) / n
+    
+    let result = {
+      "n": 1/(n/d),
+      "d": 1/(d/n),
     }
-    return result
-
+    let scaleDown = `1:${result.n.toFixed(2).replace(/(\.[0-9]*[1-9])0+$|\.0*$/,'$1')}`
+    let scaleUp = `${result.d.toFixed(2).replace(/(\.[0-9]*[1-9])0+$|\.0*$/,'$1')}:1`
+    
+    if (n<d) return scaleDown
+    return scaleUp
   }
 
 
@@ -153,9 +167,11 @@ export default function ScaleCalculator(props) {
         <h5 className={styles.instruction}>Evaluate your results</h5>
       <div className={styles.results}>
         <h5>{`${userValue + " " + userUnits}* ${numerator} / ${denominator} =` + sameUnitsResult + " " + userUnits}</h5>
+        <h6>Scale</h6>
+        <h4> {numerator + ":" + denominator + " "}({ratioTo1(numerator, denominator)})</h4>
         <h2>{userValue + " " + userUnits}</h2>
         <h6>scale {numerator}:{denominator}</h6>
-        <canvas></canvas>
+        <canvas ref={canvasRef} height="300"></canvas>
         <article>
 
         <h1>
