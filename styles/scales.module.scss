@@ -208,12 +208,10 @@
 // }
 
 .res {
-    // background-color: aquamarine;
     height: 40%;
     @include flexbox(column, center, center);
     justify-content: space-between;
     padding-top: 2rem;
-    // position: absolute;
 }
 
 .results {
